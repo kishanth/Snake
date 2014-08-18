@@ -13,14 +13,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Map extends JPanel implements ActionListener {
 
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	private final int B_WIDTH = 300;
@@ -28,14 +28,23 @@ public class Map extends JPanel implements ActionListener {
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
     private final int RAND_POS = 29;
-    private final int DELAY = 80;
+    private final int DELAY = 50;
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
 
     private int dots;
+    
     private int apple_x;
     private int apple_y;
+    
+    private int pill_x;
+    private int pill_y;
+    
+    private int fungus_x;
+    private int fungus_y;
+    
+    private int points;
 
     private boolean leftDirection = false;
     private boolean rightDirection = true;
@@ -46,7 +55,9 @@ public class Map extends JPanel implements ActionListener {
     private Timer timer;
     private Image body;
     private Image apple;
+    private Image pill;
     private Image head;
+    private Image fungus;
 
     public Map() {
 
@@ -62,14 +73,20 @@ public class Map extends JPanel implements ActionListener {
     private void loadImages() {
     	
 
-        ImageIcon iid = new ImageIcon(this.getClass().getResource("dot.png"));
-        body = iid.getImage();
+        ImageIcon imgDot = new ImageIcon(this.getClass().getResource("dot.png"));
+        body = imgDot.getImage();
 
-        ImageIcon iia = new ImageIcon(this.getClass().getResource("apple.png"));
-        apple = iia.getImage();
+        ImageIcon imgApple = new ImageIcon(this.getClass().getResource("apple.png"));
+        apple = imgApple.getImage();
 
-        ImageIcon iih = new ImageIcon(this.getClass().getResource("head.png"));
-        head = iih.getImage();
+        ImageIcon imgHead = new ImageIcon(this.getClass().getResource("head.png"));
+        head = imgHead.getImage();
+        
+        ImageIcon imgPill = new ImageIcon(this.getClass().getResource("pill.png"));
+        pill = imgPill.getImage();
+        
+        ImageIcon imgFungus = new ImageIcon(this.getClass().getResource("fungus.png"));
+        fungus = imgFungus.getImage();
         
     }
    
@@ -77,7 +94,7 @@ public class Map extends JPanel implements ActionListener {
 
     private void initGame() {
 
-        dots = 3;
+        dots = 20;
 
         for (int z = 0; z < dots; z++) {
             x[z] = 50 - z * 10;
@@ -85,6 +102,8 @@ public class Map extends JPanel implements ActionListener {
         }
 
         locateApple();
+        locatePill();
+        locateFungus();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -102,6 +121,8 @@ public class Map extends JPanel implements ActionListener {
         if (inGame) {
 
             g.drawImage(apple, apple_x, apple_y, this);
+            g.drawImage(pill, pill_x, pill_y, this);
+            g.drawImage(fungus, fungus_x, fungus_y, this);
 
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
@@ -122,12 +143,22 @@ public class Map extends JPanel implements ActionListener {
     private void gameOver(Graphics g) {
         
         String msg = "Game Over";
+        
         Font medium = new Font("Arial", Font.BOLD, 32);
+        Font small = new Font("Arial", Font.BOLD, 18);
         FontMetrics metr = getFontMetrics(medium);
 
         g.setColor(Color.red);
+        
         g.setFont(medium);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        
+        g.setFont(small);
+        metr = getFontMetrics(small);
+        String scoreMsg = "Your Score: "+points;
+
+        g.drawString(scoreMsg, (B_WIDTH - metr.stringWidth(scoreMsg)) / 2, B_HEIGHT / 2+30);
+        
     }
 
     private void checkApple() {
@@ -136,6 +167,26 @@ public class Map extends JPanel implements ActionListener {
 
             dots++;
             locateApple();
+            points+=10;
+        }
+    }
+    
+    private void checkPill() {
+
+        if ((x[0] == pill_x) && (y[0] == pill_y)) {
+
+            dots--;
+            locatePill();
+            points+=5;
+        }
+    }
+    
+    private void checkFungus() {
+
+        if ((x[0] == fungus_x) && (y[0] == fungus_y)) {
+
+            locateFungus();
+            points-=10;
         }
     }
 
@@ -161,10 +212,25 @@ public class Map extends JPanel implements ActionListener {
         if (downDirection) {
             y[0] += DOT_SIZE;
         }
+        
+        
+        pill_y+=5;
+        
+        if (pill_y>1000)
+        	pill_y=-10;
+
+		pill_x += 2;
+
+		if (pill_x > 1000)
+			pill_x = -10;
+        
     }
 
     private void checkCollision() {
-
+    	
+    /*	if (dots !=-5)
+    		return;
+*/
         for (int z = dots; z > 0; z--) {
 
             if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
@@ -191,23 +257,44 @@ public class Map extends JPanel implements ActionListener {
         if(!inGame) {
             timer.stop();
         }
+        
     }
 
     private void locateApple() {
-
         int r = (int) (Math.random() * RAND_POS);
         apple_x = ((r * DOT_SIZE));
 
         r = (int) (Math.random() * RAND_POS);
         apple_y = ((r * DOT_SIZE));
-    }
 
-    @Override
+    }
+    
+    private void locatePill() {
+        int r = (int) (Math.random() * RAND_POS);
+        pill_x = ((r * DOT_SIZE));
+
+        r = (int) (Math.random() * RAND_POS);
+        pill_y = ((r * DOT_SIZE));
+        
+	}
+
+	private void locateFungus() {
+		int r = (int) (Math.random() * RAND_POS);
+		fungus_x = ((r * DOT_SIZE));
+
+		r = (int) (Math.random() * RAND_POS);
+		fungus_y = ((r * DOT_SIZE));
+
+	}
+
+	@Override
     public void actionPerformed(ActionEvent e) {
 
         if (inGame) {
 
             checkApple();
+            checkPill();
+            checkFungus();
             checkCollision();
             move();
         }
@@ -245,6 +332,8 @@ public class Map extends JPanel implements ActionListener {
                 rightDirection = false;
                 leftDirection = false;
             }
+            
         }
+               
     }
 }
