@@ -116,6 +116,7 @@ public class Map extends JPanel implements ActionListener {
     	
    	
     	banana.imageIcon = new ImageIcon(this.getClass().getResource("banana.png"));
+    	banana.pointUnit=50;
  
     	addKeyListener(new TAdapter());
         setBackground(Color.white);
@@ -254,15 +255,15 @@ public class Map extends JPanel implements ActionListener {
         }
     }
     
-    private int checkPi(PowerItem pi) {
+    private void checkPi(PowerItem pi) {
 
         if ((x[0] == pi.x) && (y[0] == pi.y)) {
 
             locate(pi);
-            return pi.points+=pi.pointUnit;
+            points += pi.pointUnit;
         }
         
-        return pi.points;
+
     }
 
     private void move() {
@@ -302,9 +303,9 @@ public class Map extends JPanel implements ActionListener {
     }
 
     private void checkCollision() {
-
+/*
     	if (dots !=-5)
-    		return;
+    		return;*/
 
         for (int z = dots; z > 0; z--) {
 
@@ -380,8 +381,8 @@ public class Map extends JPanel implements ActionListener {
             checkPill();
             checkFungus();
             
-            banana.setPoints(checkPi(banana));
-            
+            checkPi(banana);
+
             checkCollision();
             move();
         }
