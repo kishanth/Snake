@@ -17,12 +17,62 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import olten.teko.api12.snake.Logic;
+
+
+
 
 public class Map extends JPanel implements ActionListener {
-
+	
+	
+	public class PowerItem {
+		private int x;
+		private int y;
+		private int duration;
+		private int points = 0;
+		private int pointUnit;
+		private ImageIcon imageIcon;
+		
+		int getX() {
+			return x;
+		}
+		void setX(int x) {
+			this.x = x;
+		}
+		int getY() {
+			return y;
+		}
+		void setY(int y) {
+			this.y = y;
+		}
+		int getDuration() {
+			return duration;
+		}
+		void setDuration(int duration) {
+			this.duration = duration;
+		}
+		int getPoints() {
+			return points;
+		}
+		void setPoints(int points) {
+			this.points = points;
+		}
+		ImageIcon getImageIcon() {
+			return imageIcon;
+		}
+		void setImageIcon(ImageIcon imageIcon) {
+			this.imageIcon = imageIcon;
+		}
+		private int getPointUnit() {
+			return pointUnit;
+		}
+		private void setPointUnit(int pointUnit) {
+			this.pointUnit = pointUnit;
+		}
+	}
 
 	private static final long serialVersionUID = 1L;
-	
+		
 	private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;
@@ -58,17 +108,26 @@ public class Map extends JPanel implements ActionListener {
     private Image pill;
     private Image head;
     private Image fungus;
+    
+	PowerItem banana = new PowerItem();
+
 
     public Map() {
-
-        addKeyListener(new TAdapter());
+    	
+   	
+    	banana.imageIcon = new ImageIcon(this.getClass().getResource("banana.png"));
+ 
+    	addKeyListener(new TAdapter());
         setBackground(Color.white);
         setFocusable(true);
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         loadImages();
         initGame();
+       
     }
+    
+    
 
     private void loadImages() {
     	
@@ -88,6 +147,7 @@ public class Map extends JPanel implements ActionListener {
         ImageIcon imgFungus = new ImageIcon(this.getClass().getResource("fungus.png"));
         fungus = imgFungus.getImage();
         
+        
     }
    
    
@@ -104,6 +164,8 @@ public class Map extends JPanel implements ActionListener {
         locateApple();
         locatePill();
         locateFungus();
+        
+        locate(banana);
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -123,6 +185,8 @@ public class Map extends JPanel implements ActionListener {
             g.drawImage(apple, apple_x, apple_y, this);
             g.drawImage(pill, pill_x, pill_y, this);
             g.drawImage(fungus, fungus_x, fungus_y, this);
+                        
+            g.drawImage(banana.imageIcon.getImage(), banana.x, banana.y, this);
 
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
@@ -189,6 +253,17 @@ public class Map extends JPanel implements ActionListener {
             points-=10;
         }
     }
+    
+    private int checkPi(PowerItem pi) {
+
+        if ((x[0] == pi.x) && (y[0] == pi.y)) {
+
+            locate(pi);
+            return pi.points+=pi.pointUnit;
+        }
+        
+        return pi.points;
+    }
 
     private void move() {
 
@@ -227,10 +302,10 @@ public class Map extends JPanel implements ActionListener {
     }
 
     private void checkCollision() {
-    	
-    /*	if (dots !=-5)
+
+    	if (dots !=-5)
     		return;
-*/
+
         for (int z = dots; z > 0; z--) {
 
             if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
@@ -286,6 +361,15 @@ public class Map extends JPanel implements ActionListener {
 		fungus_y = ((r * DOT_SIZE));
 
 	}
+	
+	private void locate(PowerItem pi) {
+		int r = (int) (Math.random() * RAND_POS);
+		pi.x = ((r * DOT_SIZE));
+
+		r = (int) (Math.random() * RAND_POS);
+		pi.y = ((r * DOT_SIZE));
+
+	}
 
 	@Override
     public void actionPerformed(ActionEvent e) {
@@ -295,6 +379,9 @@ public class Map extends JPanel implements ActionListener {
             checkApple();
             checkPill();
             checkFungus();
+            
+            banana.setPoints(checkPi(banana));
+            
             checkCollision();
             move();
         }
