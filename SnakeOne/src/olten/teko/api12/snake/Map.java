@@ -78,7 +78,7 @@ public class Map extends JPanel implements ActionListener {
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
     private final int RAND_POS = 29;
-    private final int DELAY = 50;
+    private int DELAY = 80;
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
@@ -169,7 +169,7 @@ public class Map extends JPanel implements ActionListener {
         locate(banana);
 
         timer = new Timer(DELAY, this);
-        timer.start();
+        
     }
 
     @Override
@@ -230,6 +230,11 @@ public class Map extends JPanel implements ActionListener {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
 
+        	if(DELAY > 30){
+        		DELAY = DELAY -5;
+        		timer.setDelay(DELAY);
+        	}
+        	
             dots++;
             locateApple();
             points+=10;
@@ -419,6 +424,18 @@ public class Map extends JPanel implements ActionListener {
                 downDirection = true;
                 rightDirection = false;
                 leftDirection = false;
+            }
+            
+            if(key == KeyEvent.VK_S){
+            	timer.start();
+            }
+            
+            if(key == KeyEvent.VK_P){
+            	timer.stop();
+            }
+            
+            if(key == KeyEvent.VK_F){
+            	timer.start();
             }
             
         }
