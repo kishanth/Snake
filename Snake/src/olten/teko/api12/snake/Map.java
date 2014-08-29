@@ -20,6 +20,7 @@ import javax.swing.Timer;
 import olten.teko.api12.snake.Logic;
 
 
+// will den scheiß nur mal testen!!!
 
 public class Map extends JPanel implements ActionListener {
 	
