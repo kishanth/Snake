@@ -24,55 +24,10 @@ import olten.teko.api12.snake.Logic;
 public class Map extends JPanel implements ActionListener {
 	
 	
-	public class PowerItem {
-		private int x;
-		private int y;
-		private int duration;
-		private int points = 0;
-		private int pointUnit;
-		private ImageIcon imageIcon;
-		
-		int getX() {
-			return x;
-		}
-		void setX(int x) {
-			this.x = x;
-		}
-		int getY() {
-			return y;
-		}
-		void setY(int y) {
-			this.y = y;
-		}
-		int getDuration() {
-			return duration;
-		}
-		void setDuration(int duration) {
-			this.duration = duration;
-		}
-		int getPoints() {
-			return points;
-		}
-		void setPoints(int points) {
-			this.points = points;
-		}
-		ImageIcon getImageIcon() {
-			return imageIcon;
-		}
-		void setImageIcon(ImageIcon imageIcon) {
-			this.imageIcon = imageIcon;
-		}
-		private int getPointUnit() {
-			return pointUnit;
-		}
-		private void setPointUnit(int pointUnit) {
-			this.pointUnit = pointUnit;
-		}
-	}
+PowerItems banana = new PowerItems();
 
-	private static final long serialVersionUID = 1L;
-		
-	private final int B_WIDTH = 300;
+    private static final long serialVersionUID = 1L;	
+    private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
@@ -108,14 +63,13 @@ public class Map extends JPanel implements ActionListener {
     private Image head;
     private Image fungus;
     
-	PowerItem banana = new PowerItem();
+	
 
 
     public Map() {
     	
    	
-    	banana.imageIcon = new ImageIcon(this.getClass().getResource("banana.png"));
-    	banana.pointUnit=50;
+    	banana.setPointUnit(50);
  
     	addKeyListener(new TAdapter());
         setBackground(Color.white);
@@ -131,7 +85,9 @@ public class Map extends JPanel implements ActionListener {
 
     private void loadImages() {
     	
-
+        ImageIcon imgBan = new ImageIcon(this.getClass().getResource("banana.png"));
+        banana.setImageIcon(imgBan);        
+        
         ImageIcon imgDot = new ImageIcon(this.getClass().getResource("dot.png"));
         body = imgDot.getImage();
 
@@ -186,7 +142,7 @@ public class Map extends JPanel implements ActionListener {
             g.drawImage(pill, pill_x, pill_y, this);
             g.drawImage(fungus, fungus_x, fungus_y, this);
                         
-            g.drawImage(banana.imageIcon.getImage(), banana.x, banana.y, this);
+            g.drawImage(banana.getImageIcon().getImage(), banana.getX(), banana.getY(), this);
 
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
@@ -259,12 +215,12 @@ public class Map extends JPanel implements ActionListener {
         }
     }
     
-    private void checkPi(PowerItem pi) {
+    private void checkPi(PowerItems pi) {
 
-        if ((x[0] == pi.x) && (y[0] == pi.y)) {
+        if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
 
             locate(pi);
-            points += pi.pointUnit;
+            points += pi.getPointUnit();
         }
         
 
@@ -367,12 +323,12 @@ public class Map extends JPanel implements ActionListener {
 
 	}
 	
-	private void locate(PowerItem pi) {
+	private void locate(PowerItems pi) {
 		int r = (int) (Math.random() * RAND_POS);
-		pi.x = ((r * DOT_SIZE));
+		pi.setX((r * DOT_SIZE));
 
 		r = (int) (Math.random() * RAND_POS);
-		pi.y = ((r * DOT_SIZE));
+		pi.setY((r * DOT_SIZE));
 
 	}
 
