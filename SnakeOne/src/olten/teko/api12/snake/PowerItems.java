@@ -22,8 +22,8 @@ public class PowerItems {
     private ImageIcon imageIcon;
     
     
-    public PowerItems() {
-    
+    public PowerItems(int pointUnit) {
+        this.pointUnit = pointUnit;
     }
 		
     int getX() {
