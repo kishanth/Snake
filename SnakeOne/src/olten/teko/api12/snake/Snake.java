@@ -15,7 +15,7 @@ public class Snake extends JFrame {
 
 	public Snake() {
 
-        add(new Map());
+        add(new Logic());
         
         setResizable(false);
         pack();
