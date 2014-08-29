@@ -53,16 +53,14 @@ public class Map extends JPanel implements ActionListener {
     
     
     // PowerItems erzeugen	
-    PowerItems banana = new PowerItems();
-    PowerItems apple = new PowerItems();
-    PowerItems fungus = new PowerItems();
-    PowerItems pill = new PowerItems();
+    PowerItems banana = new PowerItems(50);
+    PowerItems apple = new PowerItems(10);
+    PowerItems fungus = new PowerItems(-10);
+    PowerItems pill = new PowerItems(5);
 
 
     public Map() {
-    	
-   	
-    	banana.setPointUnit(50);
+
  
     	addKeyListener(new TAdapter());
         setBackground(Color.white);
@@ -84,11 +82,10 @@ public class Map extends JPanel implements ActionListener {
             y[z] = 50;
         }
 
-        locateApple();
-        locatePill();
-        locateFungus();
-        
-        locate(banana);
+        locatePi(apple);
+        locatePi(pill);
+        locatePi(fungus);
+        locatePi(banana);
 
         timer = new Timer(DELAY, this);
         
@@ -147,49 +144,14 @@ public class Map extends JPanel implements ActionListener {
         
     }
 
-    private void checkApple() {
-
-        if ((x[0] == apple.getX()) && (y[0] == apple.getY())) {
-
-        	if(DELAY > 30){
-        		DELAY = DELAY -5;
-        		timer.setDelay(DELAY);
-        	}
-        	
-            dots++;
-            locateApple();
-            points+=10;
-        }
-    }
-    
-    private void checkPill() {
-
-        if ((x[0] == pill.getX()) && (y[0] == pill.getY())) {
-
-            dots--;
-            locatePill();
-            points+=5;
-        }
-    }
-    
-    private void checkFungus() {
-
-        if ((x[0] == fungus.getX()) && (y[0] == fungus.getY())) {
-
-            locateFungus();
-            points-=10;
-        }
-    }
     
     private void checkPi(PowerItems pi) {
 
         if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
 
-            locate(pi);
+            locatePi(pi);
             points += pi.getPointUnit();
         }
-        
-
     }
 
     private void move() {
@@ -216,15 +178,19 @@ public class Map extends JPanel implements ActionListener {
         }
         
         
-//        pill_y +=5;
-//        
-//        if (pill_y>1000)
-//        	pill_y=-10;
-//
-//		pill_x += 2;
-//
-//		if (pill_x > 1000)
-//			pill_x = -10;
+        // Pille bewegen 
+        pill.setY(pill.getY() + 5);        
+        
+        if(pill.getY() > 1000){
+            pill.setY(pill.getY() - 10);
+        }
+        
+        pill.setX(pill.getX() + 5);
+        
+        
+        if(pill.getX() > 1000){
+            pill.setX(pill.getX() - 10);
+        }
         
     }
 
@@ -262,51 +228,24 @@ public class Map extends JPanel implements ActionListener {
         
     }
 
-    private void locateApple() {
+
+    private void locatePi(PowerItems pi){
         int r = (int) (Math.random() * RAND_POS);
-        apple.setX((r * DOT_SIZE));
-
+        pi.setX((r * DOT_SIZE));
+        
         r = (int) (Math.random() * RAND_POS);
-        apple.setY((r * DOT_SIZE));
-
+        pi.setY((r * DOT_SIZE));
     }
     
-    private void locatePill() {
-        int r = (int) (Math.random() * RAND_POS);
-        pill.setY((r * DOT_SIZE));
-
-        r = (int) (Math.random() * RAND_POS);
-        pill.setX((r * DOT_SIZE));
-        
-	}
-
-	private void locateFungus() {
-		int r = (int) (Math.random() * RAND_POS);
-                fungus.setX((r * DOT_SIZE));
-
-		r = (int) (Math.random() * RAND_POS);
-                fungus.setY((r * DOT_SIZE));
-		
-	}
-	
-	private void locate(PowerItems pi) {
-		int r = (int) (Math.random() * RAND_POS);
-		pi.setX((r * DOT_SIZE));
-
-		r = (int) (Math.random() * RAND_POS);
-		pi.setY((r * DOT_SIZE));
-
-	}
-
+    
 	@Override
     public void actionPerformed(ActionEvent e) {
 
         if (inGame) {
-
-            checkApple();
-            checkPill();
-            checkFungus();
             
+            checkPi(apple);
+            checkPi(pill);
+            checkPi(fungus);
             checkPi(banana);
 
             checkCollision();
