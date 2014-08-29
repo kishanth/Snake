@@ -21,33 +21,35 @@ import olten.teko.api12.snake.Logic;
 
 
 
-public class Map extends JPanel implements ActionListener {
+abstract class Map extends JPanel implements ActionListener {
 	
 
-
-    private static final long serialVersionUID = 1L;	
-    private final int B_WIDTH = 300;
-    private final int B_HEIGHT = 300;
-    private final int DOT_SIZE = 10;
-    private final int ALL_DOTS = 900;
-    private final int RAND_POS = 29;
-    private int DELAY = 80;
-
-    private final int x[] = new int[ALL_DOTS];
-    private final int y[] = new int[ALL_DOTS];
-
-    private int dots;
-    private int points;
-
-    private boolean leftDirection = false;
-    private boolean rightDirection = true;
-    private boolean upDirection = false;
-    private boolean downDirection = false;
-    private boolean inGame = true;
-
-    private Timer timer;
+    // Map und Schlangen Variablen
+    protected static final long serialVersionUID = 1L;	
+    protected final int B_WIDTH = 300;
+    protected final int B_HEIGHT = 300;
+    protected final int DOT_SIZE = 10;
+    protected final int ALL_DOTS = 900;
+    protected final int RAND_POS = 29;
+    protected final int x[] = new int[ALL_DOTS];
+    protected final int y[] = new int[ALL_DOTS];
+    protected int dots;
     
+    // Timer Variablen
+    protected Timer timer;
+    protected int DELAY = 80;
+
     
+    protected int points;
+
+    // Richtungs Variablen
+    protected boolean leftDirection = false;
+    protected boolean rightDirection = true;
+    protected boolean upDirection = false;
+    protected boolean downDirection = false;
+    protected boolean inGame = true;
+
+
     // Bilder laden
     loadImages images = new loadImages();
     
@@ -61,34 +63,12 @@ public class Map extends JPanel implements ActionListener {
 
     public Map() {
 
- 
     	addKeyListener(new TAdapter());
         setBackground(Color.white);
         setFocusable(true);
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-        
-        initGame();
        
-    }
-    
- 
-    private void initGame() {
-
-        dots = 20;
-
-        for (int z = 0; z < dots; z++) {
-            x[z] = 50 - z * 10;
-            y[z] = 50;
-        }
-
-        locatePi(apple);
-        locatePi(pill);
-        locatePi(fungus);
-        locatePi(banana);
-
-        timer = new Timer(DELAY, this);
-        
     }
 
     @Override
@@ -144,17 +124,7 @@ public class Map extends JPanel implements ActionListener {
         
     }
 
-    
-    private void checkPi(PowerItems pi) {
-
-        if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
-
-            locatePi(pi);
-            points += pi.getPointUnit();
-        }
-    }
-
-    private void move() {
+    protected void move() {
 
         for (int z = dots; z > 0; z--) {
             x[z] = x[(z - 1)];
@@ -194,66 +164,6 @@ public class Map extends JPanel implements ActionListener {
         
     }
 
-    private void checkCollision() {
-/*
-    	if (dots !=-5)
-    		return;*/
-
-        for (int z = dots; z > 0; z--) {
-
-            if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
-                inGame = false;
-            }
-        }
-
-        if (y[0] >= B_HEIGHT) {
-            inGame = false;
-        }
-
-        if (y[0] < 0) {
-            inGame = false;
-        }
-
-        if (x[0] >= B_WIDTH) {
-            inGame = false;
-        }
-
-        if (x[0] < 0) {
-            inGame = false;
-        }
-        
-        if(!inGame) {
-            timer.stop();
-        }
-        
-    }
-
-
-    private void locatePi(PowerItems pi){
-        int r = (int) (Math.random() * RAND_POS);
-        pi.setX((r * DOT_SIZE));
-        
-        r = (int) (Math.random() * RAND_POS);
-        pi.setY((r * DOT_SIZE));
-    }
-    
-    
-	@Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (inGame) {
-            
-            checkPi(apple);
-            checkPi(pill);
-            checkPi(fungus);
-            checkPi(banana);
-
-            checkCollision();
-            move();
-        }
-
-        repaint();
-    }
 
     private class TAdapter extends KeyAdapter {
 
