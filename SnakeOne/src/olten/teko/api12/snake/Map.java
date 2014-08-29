@@ -23,8 +23,7 @@ import olten.teko.api12.snake.Logic;
 
 public class Map extends JPanel implements ActionListener {
 	
-	
-PowerItems banana = new PowerItems();
+
 
     private static final long serialVersionUID = 1L;	
     private final int B_WIDTH = 300;
@@ -38,16 +37,6 @@ PowerItems banana = new PowerItems();
     private final int y[] = new int[ALL_DOTS];
 
     private int dots;
-    
-    private int apple_x;
-    private int apple_y;
-    
-    private int pill_x;
-    private int pill_y;
-    
-    private int fungus_x;
-    private int fungus_y;
-    
     private int points;
 
     private boolean leftDirection = false;
@@ -57,13 +46,17 @@ PowerItems banana = new PowerItems();
     private boolean inGame = true;
 
     private Timer timer;
-    private Image body;
-    private Image apple;
-    private Image pill;
-    private Image head;
-    private Image fungus;
     
-	
+    
+    // Bilder laden
+    loadImages images = new loadImages();
+    
+    
+    // PowerItems erzeugen	
+    PowerItems banana = new PowerItems();
+    PowerItems apple = new PowerItems();
+    PowerItems fungus = new PowerItems();
+    PowerItems pill = new PowerItems();
 
 
     public Map() {
@@ -76,38 +69,12 @@ PowerItems banana = new PowerItems();
         setFocusable(true);
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-        loadImages();
+        
         initGame();
        
     }
     
-    
-
-    private void loadImages() {
-    	
-        ImageIcon imgBan = new ImageIcon(this.getClass().getResource("banana.png"));
-        banana.setImageIcon(imgBan);        
-        
-        ImageIcon imgDot = new ImageIcon(this.getClass().getResource("dot.png"));
-        body = imgDot.getImage();
-
-        ImageIcon imgApple = new ImageIcon(this.getClass().getResource("apple.png"));
-        apple = imgApple.getImage();
-
-        ImageIcon imgHead = new ImageIcon(this.getClass().getResource("head.png"));
-        head = imgHead.getImage();
-        
-        ImageIcon imgPill = new ImageIcon(this.getClass().getResource("pill.png"));
-        pill = imgPill.getImage();
-        
-        ImageIcon imgFungus = new ImageIcon(this.getClass().getResource("fungus.png"));
-        fungus = imgFungus.getImage();
-        
-        
-    }
-   
-   
-
+ 
     private void initGame() {
 
         dots = 20;
@@ -138,17 +105,16 @@ PowerItems banana = new PowerItems();
         
         if (inGame) {
 
-            g.drawImage(apple, apple_x, apple_y, this);
-            g.drawImage(pill, pill_x, pill_y, this);
-            g.drawImage(fungus, fungus_x, fungus_y, this);
-                        
-            g.drawImage(banana.getImageIcon().getImage(), banana.getX(), banana.getY(), this);
+            g.drawImage(images.getApple(), apple.getX(), apple.getY(), this);
+            g.drawImage(images.getPill(), pill.getX(), pill.getY(), this);
+            g.drawImage(images.getFungus(), fungus.getX(), fungus.getY(), this);
+            g.drawImage(images.getBanana(), banana.getX(), banana.getY(), this);
 
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
-                    g.drawImage(head, x[z], y[z], this);
+                    g.drawImage(images.getHead(), x[z], y[z], this);
                 } else {
-                    g.drawImage(body, x[z], y[z], this);
+                    g.drawImage(images.getBody(), x[z], y[z], this);
                 }
             }
 
@@ -183,7 +149,7 @@ PowerItems banana = new PowerItems();
 
     private void checkApple() {
 
-        if ((x[0] == apple_x) && (y[0] == apple_y)) {
+        if ((x[0] == apple.getX()) && (y[0] == apple.getY())) {
 
         	if(DELAY > 30){
         		DELAY = DELAY -5;
@@ -198,7 +164,7 @@ PowerItems banana = new PowerItems();
     
     private void checkPill() {
 
-        if ((x[0] == pill_x) && (y[0] == pill_y)) {
+        if ((x[0] == pill.getX()) && (y[0] == pill.getY())) {
 
             dots--;
             locatePill();
@@ -208,7 +174,7 @@ PowerItems banana = new PowerItems();
     
     private void checkFungus() {
 
-        if ((x[0] == fungus_x) && (y[0] == fungus_y)) {
+        if ((x[0] == fungus.getX()) && (y[0] == fungus.getY())) {
 
             locateFungus();
             points-=10;
@@ -250,15 +216,15 @@ PowerItems banana = new PowerItems();
         }
         
         
-        pill_y+=5;
-        
-        if (pill_y>1000)
-        	pill_y=-10;
-
-		pill_x += 2;
-
-		if (pill_x > 1000)
-			pill_x = -10;
+//        pill_y +=5;
+//        
+//        if (pill_y>1000)
+//        	pill_y=-10;
+//
+//		pill_x += 2;
+//
+//		if (pill_x > 1000)
+//			pill_x = -10;
         
     }
 
@@ -298,29 +264,29 @@ PowerItems banana = new PowerItems();
 
     private void locateApple() {
         int r = (int) (Math.random() * RAND_POS);
-        apple_x = ((r * DOT_SIZE));
+        apple.setX((r * DOT_SIZE));
 
         r = (int) (Math.random() * RAND_POS);
-        apple_y = ((r * DOT_SIZE));
+        apple.setY((r * DOT_SIZE));
 
     }
     
     private void locatePill() {
         int r = (int) (Math.random() * RAND_POS);
-        pill_x = ((r * DOT_SIZE));
+        pill.setY((r * DOT_SIZE));
 
         r = (int) (Math.random() * RAND_POS);
-        pill_y = ((r * DOT_SIZE));
+        pill.setX((r * DOT_SIZE));
         
 	}
 
 	private void locateFungus() {
 		int r = (int) (Math.random() * RAND_POS);
-		fungus_x = ((r * DOT_SIZE));
+                fungus.setX((r * DOT_SIZE));
 
 		r = (int) (Math.random() * RAND_POS);
-		fungus_y = ((r * DOT_SIZE));
-
+                fungus.setY((r * DOT_SIZE));
+		
 	}
 	
 	private void locate(PowerItems pi) {
