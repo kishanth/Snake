@@ -21,48 +21,51 @@ public class PowerItems {
     private int pointUnit;
     private ImageIcon imageIcon;
     
-    
+    // Konstruktor mit Punkteübergabe von einzelnem Item
     public PowerItems(int pointUnit) {
+        
         this.pointUnit = pointUnit;
+        
     }
 		
+    // Setter
+    void setX(int x) {
+        this.x = x;
+    }        
+    void setY(int y) {
+        this.y = y;
+    }        
+    void setDuration(int duration) {
+        this.duration = duration;
+    }        
+    void setPoints(int points) {
+        this.points = points;
+    }        
+    void setImageIcon(ImageIcon imageIcon) {
+        this.imageIcon = imageIcon;
+    }        
+    void setPointUnit(int pointUnit) {
+        this.pointUnit = pointUnit;
+    }
+
+     // Getter
     int getX() {
-            
         return x;
-        
-    };
-        void setX(int x) {
-                this.x = x;
-        }
-        int getY() {
-                return y;
-        }
-        void setY(int y) {
-                this.y = y;
-        }
-        int getDuration() {
-                return duration;
-        }
-        void setDuration(int duration) {
-                this.duration = duration;
-        }
-        int getPoints() {
-                return points;
-        }
-        void setPoints(int points) {
-                this.points = points;
-        }
-        ImageIcon getImageIcon() {
-                return imageIcon;
-        }
-        void setImageIcon(ImageIcon imageIcon) {
-                this.imageIcon = imageIcon;
-        }
-         int getPointUnit() {
-                return pointUnit;
-        }
-         void setPointUnit(int pointUnit) {
-                this.pointUnit = pointUnit;
-        }
-	}
+    };        
+    int getPointUnit() {
+        return pointUnit;
+    }
+    ImageIcon getImageIcon() {
+        return imageIcon;
+    }
+    int getPoints() {
+        return points;
+    }
+    int getDuration() {
+        return duration;
+    }
+    int getY() {
+        return y;
+    }
+}
 
