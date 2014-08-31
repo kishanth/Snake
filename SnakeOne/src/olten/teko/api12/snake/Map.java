@@ -48,8 +48,11 @@ abstract class Map extends JPanel implements ActionListener {
     protected boolean upDirection = false;
     protected boolean downDirection = false;
     protected boolean inGame = true;
+    protected boolean gamePause = false;
+    protected boolean gameStart = true;
 
 
+    // Sollte auch in Init ausgelagert werden
     // Bilder laden
     loadImages images = new loadImages();
     
@@ -81,6 +84,16 @@ abstract class Map extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
         
         if (inGame) {
+            
+            if(gameStart){                
+                gameStart(g);                
+            }
+            
+            if(gamePause){
+                timer.stop();
+                gamePause(g);
+                
+            }
 
             g.drawImage(images.getApple(), apple.getX(), apple.getY(), this);
             g.drawImage(images.getPill(), pill.getX(), pill.getY(), this);
@@ -102,6 +115,46 @@ abstract class Map extends JPanel implements ActionListener {
             gameOver(g);
         }        
     }
+    
+    private void gameStart(Graphics g){
+        
+        String msg = "To start Press 'S'";
+        String startMsg = "Press 'P' to pause";
+        
+        Font medium = new Font("Arial", Font.BOLD, 32);
+        Font small = new Font("Arial", Font.BOLD, 18);
+        
+        FontMetrics metr = getFontMetrics(medium);
+        g.setColor(Color.blue);
+        g.setFont(medium);
+        g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        
+        g.setFont(small);
+        metr = getFontMetrics(small);
+        g.drawString(startMsg, (B_WIDTH - metr.stringWidth(startMsg)) / 2, B_HEIGHT / 2 + 30);        
+    }
+    
+    private void gamePause(Graphics g){
+        
+        String msg = "Pause";
+        
+        Font medium = new Font("Arial", Font.BOLD, 32);
+        Font small = new Font("Arial", Font.BOLD, 18);
+        
+        FontMetrics metr = getFontMetrics(medium);
+        g.setColor(Color.blue);
+        g.setFont(medium);
+        g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+                
+        g.setFont(small);
+        metr = getFontMetrics(small);
+        String scoreMsg = "Your current Score: " + points;
+        g.drawString(scoreMsg, (B_WIDTH - metr.stringWidth(scoreMsg)) / 2, B_HEIGHT / 2+30);
+        
+        String pauseMsg = "Press 'C' to continue";
+        g.drawString(pauseMsg, (B_WIDTH - metr.stringWidth(pauseMsg)) / 2, B_HEIGHT / 2+60);
+        
+    }
 
     private void gameOver(Graphics g) {
         
@@ -111,7 +164,7 @@ abstract class Map extends JPanel implements ActionListener {
         Font small = new Font("Arial", Font.BOLD, 18);
         FontMetrics metr = getFontMetrics(medium);
 
-        g.setColor(Color.red);
+        g.setColor(Color.blue);
         
         g.setFont(medium);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
@@ -197,16 +250,18 @@ abstract class Map extends JPanel implements ActionListener {
             }
             
             if(key == KeyEvent.VK_S){
-            	timer.start();
+                timer.start();
+            	gameStart = false;
             }
             
             if(key == KeyEvent.VK_P){
-            	timer.stop();
+            	gamePause = true;                
             }
             
-            if(key == KeyEvent.VK_F){
-            	timer.start();
-            }
+            if(key == KeyEvent.VK_C){
+            	gamePause = false;
+                timer.start();
+            } 
             
         }
                
