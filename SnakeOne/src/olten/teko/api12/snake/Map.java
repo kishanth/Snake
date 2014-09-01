@@ -6,19 +6,24 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.*;
 
 
 abstract class Map extends Game {
 	
 
+
     public Map() {
 
     	addKeyListener(new TAdapter());
         setBackground(Color.white);
-        setFocusable(true);
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-       
+        setFocusable(true);        
+        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));        
+        
     }
+    
+
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -44,13 +49,13 @@ abstract class Map extends Game {
             // Punkte umwandeln in String
             String wert = String.valueOf(points);
             
-            g.drawImage(images.getApple(), apple.getX(), apple.getY(), this);
-            g.drawImage(images.getPill(), pill.getX(), pill.getY(), this);
-            g.drawImage(images.getFungus(), fungus.getX(), fungus.getY(), this);
-            g.drawImage(images.getBanana(), banana.getX(), banana.getY(), this);
+            g.drawImage(apple.getImage(), apple.getX(), apple.getY(), this);
+            g.drawImage(pill.getImage(), pill.getX(), pill.getY(), this);
+            g.drawImage(fungus.getImage(), fungus.getX(), fungus.getY(), this);
+            g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
             
             // Punktestand rechts oben
-            g.drawString(wert, 280, 15);
+            g.drawString(wert, 265, 15);
 
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
