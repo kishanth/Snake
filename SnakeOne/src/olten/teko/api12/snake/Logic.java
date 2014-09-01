@@ -18,9 +18,12 @@ abstract class Logic extends Map {
 
         if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
             
-            if(pi == apple && DELAY > 30){                
+            if(pi == apple) {
+                dots++;
+                if(DELAY > 30){
                     DELAY = DELAY - 1;
                     timer.setDelay(DELAY);
+                }                    
             }
 
             locatePi(pi);
