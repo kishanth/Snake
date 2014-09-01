@@ -20,15 +20,19 @@ import javax.swing.Timer;
  */
 abstract class Game extends JPanel implements ActionListener {
     
+    
+    
+    public final int B_WIDTH = 300;
+    public final int B_HEIGHT = 300;
+    public final int DOT_SIZE = 10;
+    public final int ALL_DOTS = 900;
+    public final int RAND_POS = 29;
+    public final int x[] = new int[ALL_DOTS];
+    public final int y[] = new int[ALL_DOTS];
+    
+    
     // Map und Schlangen Variablen
     protected static final long serialVersionUID = 1L;	
-    protected final int B_WIDTH = 300;
-    protected final int B_HEIGHT = 300;
-    protected final int DOT_SIZE = 10;
-    protected final int ALL_DOTS = 900;
-    protected final int RAND_POS = 29;
-    protected final int x[] = new int[ALL_DOTS];
-    protected final int y[] = new int[ALL_DOTS];
     protected int dots;
     
     // Timer Variablen
@@ -47,11 +51,8 @@ abstract class Game extends JPanel implements ActionListener {
     protected boolean gamePause = false;
     protected boolean gameStart = true;
     
-    
-    
     loadImages images = new loadImages();
-    
-    
+
     // PowerItems erzeugen	
     PowerItems banana = new PowerItems(50);
     PowerItems apple = new PowerItems(10);
