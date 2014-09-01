@@ -1,14 +1,8 @@
 package olten.teko.api12.snake;
 
-import java.awt.event.ActionEvent;
-import javax.swing.Timer;
 
-public class Logic extends Map {
+abstract class Logic extends Map {
 
-    // Konstruktor zum Spiel starten
-    public Logic(){
-        initGame();
-    }
     
     // PowerItems Platzieren
     protected void locatePi(PowerItems pi){
@@ -23,6 +17,11 @@ public class Logic extends Map {
     protected void checkPi(PowerItems pi) {
 
         if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
+            
+            if(pi == apple && DELAY > 30){                
+                    DELAY = DELAY - 1;
+                    timer.setDelay(DELAY);
+            }
 
             locatePi(pi);
             points += pi.getPointUnit();
@@ -60,44 +59,5 @@ public class Logic extends Map {
             timer.stop();
         }
         
-    }
-    
-    // Methode Ausführung überschreiben
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (inGame) {
-            
-            checkPi(apple);
-            checkPi(pill);
-            checkPi(fungus);
-            checkPi(banana);
-
-            checkCollision();
-            move();
-        }
-
-        repaint();
-    }
-    
-    
-    // Sollte ausgelagert werden
-    private void initGame() {
-
-        dots = 20;
-
-        for (int z = 0; z < dots; z++) {
-            x[z] = 50 - z * 10;
-            y[z] = 50;
-        }
-
-        locatePi(apple);
-        locatePi(pill);
-        locatePi(fungus);
-        locatePi(banana);
-
-        timer = new Timer(DELAY, this);
-        
-    }
-	
+    }	
 }
