@@ -69,11 +69,11 @@ abstract class Game extends JPanel implements ActionListener {
         Font medium = new Font("Arial", Font.BOLD, 32);
         Font small = new Font("Arial", Font.BOLD, 18);
         
-        FontMetrics metr = getFontMetrics(medium);
+        FontMetrics metr;
         g.setColor(Color.blue);
         g.setFont(small);
         metr = getFontMetrics(small);
-        g.drawString("Hi " + name, (B_WIDTH - metr.stringWidth(name)) / 2, B_HEIGHT / 2 - 35);
+        g.drawString("Hi " + name, (B_WIDTH - metr.stringWidth("Hi " + name)) / 2, B_HEIGHT / 2 - 35);
                 
         g.setFont(medium);
         metr = getFontMetrics(medium);
