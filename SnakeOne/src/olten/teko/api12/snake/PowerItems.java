@@ -7,6 +7,7 @@
 package olten.teko.api12.snake;
 
 import javax.swing.ImageIcon;
+import java.awt.Image;
 
 /**
  *
@@ -18,16 +19,17 @@ public class PowerItems {
     private int y;
     private int duration;
     private int points = 0;
-    private int pointUnit;
-    private ImageIcon imageIcon;
+    private int pointUnit;    
+    private Image image;
     
     // Konstruktor mit Punkteübergabe von einzelnem Item
-    public PowerItems(int pointUnit) {
+    public PowerItems(int pointUnit, String object) {
         
         this.pointUnit = pointUnit;
-        
+        ImageIcon img = new ImageIcon(this.getClass().getResource(object + ".png"));
+        image = img.getImage();
     }
-		
+    		
     // Setter
     void setX(int x) {
         this.x = x;
@@ -40,10 +42,7 @@ public class PowerItems {
     }        
     void setPoints(int points) {
         this.points = points;
-    }        
-    void setImageIcon(ImageIcon imageIcon) {
-        this.imageIcon = imageIcon;
-    }        
+    }                
     void setPointUnit(int pointUnit) {
         this.pointUnit = pointUnit;
     }
@@ -55,8 +54,8 @@ public class PowerItems {
     int getPointUnit() {
         return pointUnit;
     }
-    ImageIcon getImageIcon() {
-        return imageIcon;
+    Image getImage() {
+        return image;
     }
     int getPoints() {
         return points;
