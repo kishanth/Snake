@@ -6,8 +6,7 @@
 
 package olten.teko.api12.snake;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
 import javax.swing.JFrame;
 
 /**
@@ -16,16 +15,39 @@ import javax.swing.JFrame;
  */
 public class StartGame extends JFrame{
     
+    Menue menu = new Menue();
+    
     public StartGame() {
-
-        add(new Init());
         
-        setResizable(false);
+        setMenuBar(menu.getMenuBar());
+        add(new Init());
+        setResizable(false);        
         pack();
         
         setTitle("Snake");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+    }
+    
+    private class Menue extends Frame {
+        
+        MenuBar mbar;
+        Menu menu,submenu;
+        MenuItem m1;
+        
+        public Menue(){
+            
+            mbar = new MenuBar();
+            menu = new Menu("Datei");
+            m1 = new MenuItem("Neues Spiel");
+            
+            
+            menu.add(m1);
+            mbar.add(menu);
+            setMenuBar(mbar);
+            
+        }
     }
 }
 
