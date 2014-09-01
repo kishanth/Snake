@@ -6,7 +6,6 @@
 
 package olten.teko.api12.snake;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 
@@ -17,7 +16,8 @@ import javax.swing.Timer;
 public class Init extends Logic {
     
     // Konstruktor zum Aufrufen vom Spiel
-    Init(){
+    Init(String name){
+        this.name = name;
         initGame();
     }
     
@@ -42,7 +42,6 @@ public class Init extends Logic {
 
     private void initGame() {
         
-        
         dots = 3;
 
         for (int z = 0; z < dots; z++) {
@@ -59,6 +58,7 @@ public class Init extends Logic {
         
     }
 
+    
         
     }
 
