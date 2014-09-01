@@ -21,7 +21,6 @@ import javax.swing.Timer;
 abstract class Game extends JPanel implements ActionListener {
     
     
-    
     public final int B_WIDTH = 300;
     public final int B_HEIGHT = 300;
     public final int DOT_SIZE = 10;
@@ -54,10 +53,10 @@ abstract class Game extends JPanel implements ActionListener {
     loadImages images = new loadImages();
 
     // PowerItems erzeugen	
-    PowerItems banana = new PowerItems(50);
-    PowerItems apple = new PowerItems(10);
-    PowerItems fungus = new PowerItems(-10);
-    PowerItems pill = new PowerItems(5);
+    PowerItems banana = new PowerItems(50, "banana");
+    PowerItems apple = new PowerItems(10, "apple");
+    PowerItems fungus = new PowerItems(-10, "fungus");
+    PowerItems pill = new PowerItems(5, "pill");
     
     
     protected void gameStart(Graphics g){
