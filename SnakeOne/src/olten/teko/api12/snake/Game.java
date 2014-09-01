@@ -21,15 +21,15 @@ import javax.swing.Timer;
 abstract class Game extends JPanel implements ActionListener {
     
     
-    public final int B_WIDTH = 300;
-    public final int B_HEIGHT = 300;
-    public final int DOT_SIZE = 10;
-    public final int ALL_DOTS = 900;
-    public final int RAND_POS = 29;
-    public final int x[] = new int[ALL_DOTS];
-    public final int y[] = new int[ALL_DOTS];
+    protected final int B_WIDTH = 300;
+    protected final int B_HEIGHT = 300;
+    protected final int DOT_SIZE = 10;
+    protected final int ALL_DOTS = 900;
+    protected final int RAND_POS = 29;
+    protected final int x[] = new int[ALL_DOTS];
+    protected final int y[] = new int[ALL_DOTS];
     
-    
+
     // Map und Schlangen Variablen
     protected static final long serialVersionUID = 1L;	
     protected int dots;
@@ -38,6 +38,8 @@ abstract class Game extends JPanel implements ActionListener {
     protected Timer timer;
     protected int DELAY = 80;
 
+    //Spielername
+    protected String name;
     
     protected int points;
 
@@ -69,7 +71,12 @@ abstract class Game extends JPanel implements ActionListener {
         
         FontMetrics metr = getFontMetrics(medium);
         g.setColor(Color.blue);
+        g.setFont(small);
+        metr = getFontMetrics(small);
+        g.drawString("Hi " + name, (B_WIDTH - metr.stringWidth(name)) / 2, B_HEIGHT / 2 - 35);
+                
         g.setFont(medium);
+        metr = getFontMetrics(medium);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
         
         g.setFont(small);
