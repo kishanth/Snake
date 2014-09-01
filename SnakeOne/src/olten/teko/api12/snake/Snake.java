@@ -6,17 +6,13 @@ import javax.swing.JFrame;
 
 
 public class Snake {
-    
-        
-    
+     
     public static void main(String[] args) {
         
         EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {  
-                 
-                JFrame snakeFrame = new StartGame();
-           
+            public void run() {                   
+                JFrame snakeFrame = new StartGame();           
                 snakeFrame.setVisible(true);                
             }
         });
