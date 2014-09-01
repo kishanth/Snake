@@ -6,6 +6,7 @@
 
 package olten.teko.api12.snake;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 
@@ -40,8 +41,9 @@ public class Init extends Logic {
         
 
     private void initGame() {
-
-        dots = 20;
+        
+        
+        dots = 3;
 
         for (int z = 0; z < dots; z++) {
             x[z] = 50 - z * 10;
@@ -56,4 +58,8 @@ public class Init extends Logic {
         timer = new Timer(DELAY, this);
         
     }
-}
+
+        
+    }
+
+  
