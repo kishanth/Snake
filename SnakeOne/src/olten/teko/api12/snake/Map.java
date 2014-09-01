@@ -40,11 +40,17 @@ abstract class Map extends Game {
                 gamePause(g);
                 
             }
-
+            
+            // Punkte umwandeln in String
+            String wert = String.valueOf(points);
+            
             g.drawImage(images.getApple(), apple.getX(), apple.getY(), this);
             g.drawImage(images.getPill(), pill.getX(), pill.getY(), this);
             g.drawImage(images.getFungus(), fungus.getX(), fungus.getY(), this);
             g.drawImage(images.getBanana(), banana.getX(), banana.getY(), this);
+            
+            // Punktestand rechts oben
+            g.drawString(wert, 280, 15);
 
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
@@ -62,7 +68,20 @@ abstract class Map extends Game {
         }        
     }
     
- 
+    protected void movePill(){
+        pill.setY(pill.getY() + 5);        
+        
+        if(pill.getY() > 1000){
+            pill.setY(pill.getY() - 10);
+        }
+        
+        pill.setX(pill.getX() + 5);
+        
+        
+        if(pill.getX() > 1000){
+            pill.setX(pill.getX() - 10);
+        }
+    }
 
     protected void move() {
 
@@ -87,21 +106,7 @@ abstract class Map extends Game {
             y[0] += DOT_SIZE;
         }
         
-        
-        // Pille bewegen 
-        pill.setY(pill.getY() + 5);        
-        
-        if(pill.getY() > 1000){
-            pill.setY(pill.getY() - 10);
-        }
-        
-        pill.setX(pill.getX() + 5);
-        
-        
-        if(pill.getX() > 1000){
-            pill.setX(pill.getX() - 10);
-        }
-        
+        movePill();
     }
 
 
@@ -148,9 +153,8 @@ abstract class Map extends Game {
             if(key == KeyEvent.VK_C){
             	gamePause = false;
                 timer.start();
-            } 
-            
-        }
-               
+            }                         
+        
+        }               
     }
 }
