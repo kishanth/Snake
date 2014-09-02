@@ -17,7 +17,7 @@ public class Init extends Logic {
     
     // Konstruktor zum Aufrufen vom Spiel
     Init(String name){
-        this.name = name;
+        onePlayer.setName(name);
         initGame();
     }
     
