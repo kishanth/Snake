@@ -13,18 +13,18 @@ abstract class Logic extends Map {
         pi.setY((r * DOT_SIZE));
     }
     
-    // Prüfen ob PowerItems getroffen wurde
+    // Prüfen ob PowerItems getroffen wurde, Timer erhöhen
     protected void checkPi(PowerItems pi) {
 
         if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
             
-            if(pi == apple) {
-                dots++;
-                if(DELAY > 30){
-                    DELAY = DELAY - 1;
-                    timer.setDelay(DELAY);
-                }                    
+            if(dots + pi.getDots() >= 3){
+                dots = dots + pi.getDots();
             }
+            if(DELAY > 30){
+                DELAY = DELAY + pi.getDelay();
+                timer.setDelay(DELAY);
+            }            
 
             locatePi(pi);
             points += pi.getPointUnit();
