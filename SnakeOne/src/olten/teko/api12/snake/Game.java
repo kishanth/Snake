@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -125,5 +126,29 @@ abstract class Game extends JPanel implements ActionListener {
 
         g.drawString(scoreMsg, (B_WIDTH - metr.stringWidth(scoreMsg)) / 2, B_HEIGHT / 2+30);
         
+    }
+    
+    protected void DrawObjects(Graphics g) {
+        
+            // Punkte umwandeln in String
+            String sPoint = String.valueOf(points);
+            
+            g.drawImage(apple.getImage(), apple.getX(), apple.getY(), this);
+            g.drawImage(pill.getImage(), pill.getX(), pill.getY(), this);
+            g.drawImage(fungus.getImage(), fungus.getX(), fungus.getY(), this);
+            g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
+            
+            // Punktestand rechts oben
+            g.drawString(sPoint, 265, 15);
+
+            for (int z = 0; z < dots; z++) {
+                if (z == 0) {
+                    g.drawImage(images.getHead(), x[z], y[z], this);
+                } else {
+                    g.drawImage(images.getBody(), x[z], y[z], this);
+                }
+            }
+
+            Toolkit.getDefaultToolkit().sync();
     }
 }
