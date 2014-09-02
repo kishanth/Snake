@@ -39,10 +39,8 @@ abstract class Game extends JPanel implements ActionListener {
     protected Timer timer;
     protected int DELAY = 80;
 
-    //Spielername
-    protected String name;
-    
-    protected int points;
+    //Spielername und Punkte
+
 
     // Richtungs Variablen
     protected boolean leftDirection = false;
@@ -53,6 +51,8 @@ abstract class Game extends JPanel implements ActionListener {
     protected boolean gamePause = false;
     protected boolean gameStart = true;
     
+    
+    Player onePlayer = new Player();
     loadImages images = new loadImages();
 
     // PowerItems erzeugen -- erste Zahl = Punkte, zweite Iconname (wie bild im Explorer), drittens anzahl abzug/zunahme von dots
@@ -75,7 +75,7 @@ abstract class Game extends JPanel implements ActionListener {
         g.setColor(Color.blue);
         g.setFont(small);
         metr = getFontMetrics(small);
-        g.drawString("Hi " + name, (B_WIDTH - metr.stringWidth("Hi " + name)) / 2, B_HEIGHT / 2 - 35);
+        g.drawString("Hi " + onePlayer.getName(), (B_WIDTH - metr.stringWidth("Hi " + onePlayer.getName())) / 2, B_HEIGHT / 2 - 35);
                 
         g.setFont(medium);
         metr = getFontMetrics(medium);
@@ -100,7 +100,7 @@ abstract class Game extends JPanel implements ActionListener {
                 
         g.setFont(small);
         metr = getFontMetrics(small);
-        String scoreMsg = "Your current Score: " + points;
+        String scoreMsg = "Your current Score: " + onePlayer.getPoints();
         g.drawString(scoreMsg, (B_WIDTH - metr.stringWidth(scoreMsg)) / 2, B_HEIGHT / 2+30);
         
         String pauseMsg = "Press 'C' to continue";
@@ -123,7 +123,7 @@ abstract class Game extends JPanel implements ActionListener {
         
         g.setFont(small);
         metr = getFontMetrics(small);
-        String scoreMsg = "Your Score: "+points;
+        String scoreMsg = "Your Score: " + onePlayer.getPoints();
 
         g.drawString(scoreMsg, (B_WIDTH - metr.stringWidth(scoreMsg)) / 2, B_HEIGHT / 2+30);
         
@@ -132,7 +132,7 @@ abstract class Game extends JPanel implements ActionListener {
     protected void DrawObjects(Graphics g) {
         
             // Punkte umwandeln in String
-            String sPoint = String.valueOf(points);
+            String sPoint = String.valueOf(onePlayer.getPoints());
             //String sDelay = String.valueOf(DELAY);
             
             // Objekte in Feld Zeichnen
