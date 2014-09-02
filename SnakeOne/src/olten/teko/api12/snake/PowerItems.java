@@ -19,18 +19,21 @@ public class PowerItems {
     private int y;
     private int duration;
     private int points = 0;
-    private int pointUnit;    
+    private int pointUnit;   
+    private int dots;
+    private int delay;
     private Image image;
     
     // Konstruktor mit Punkteübergabe von einzelnem Item
-    public PowerItems(int pointUnit, String object) {
-        
+    public PowerItems(int pointUnit, String object, int dots, int delay) {        
         this.pointUnit = pointUnit;
+        this.delay = delay;
+        this.dots = dots;                
         ImageIcon img = new ImageIcon(this.getClass().getResource(object + ".png"));
         image = img.getImage();
     }
     		
-    // Setter
+    // Setter         
     void setX(int x) {
         this.x = x;
     }        
@@ -47,10 +50,16 @@ public class PowerItems {
         this.pointUnit = pointUnit;
     }
 
-     // Getter
+     // Getter 
+    int getDelay() {
+        return delay;
+    }    
+    int getDots() {
+        return dots;
+    }    
     int getX() {
         return x;
-    };        
+    }        
     int getPointUnit() {
         return pointUnit;
     }
