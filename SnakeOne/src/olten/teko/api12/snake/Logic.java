@@ -27,7 +27,8 @@ abstract class Logic extends Map {
             }            
 
             locatePi(pi);
-            points += pi.getPointUnit();
+            
+            onePlayer.setPoints(pi.getPointUnit()); 
         }
     }
     
