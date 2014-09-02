@@ -3,10 +3,8 @@ package olten.teko.api12.snake;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.*;
 
 
 abstract class Map extends Game {
