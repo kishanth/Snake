@@ -55,11 +55,12 @@ abstract class Game extends JPanel implements ActionListener {
     
     loadImages images = new loadImages();
 
-    // PowerItems erzeugen	
-    PowerItems banana = new PowerItems(50, "banana");
-    PowerItems apple = new PowerItems(10, "apple");
-    PowerItems fungus = new PowerItems(-10, "fungus");
-    PowerItems pill = new PowerItems(5, "pill");
+    // PowerItems erzeugen -- erste Zahl = Punkte, zweite Iconname (wie bild im Explorer), drittens anzahl abzug/zunahme von dots
+    // viertens Delay zunahme oder abnahme (+ = langsamer, - = schneller)
+    PowerItems banana = new PowerItems(50, "banana", 0, 0);
+    PowerItems apple = new PowerItems(10, "apple", 1, -1);
+    PowerItems fungus = new PowerItems(-10, "fungus", -2, 0);
+    PowerItems pill = new PowerItems(5, "pill", 2, 2);
     
     
     protected void gameStart(Graphics g){
@@ -132,7 +133,9 @@ abstract class Game extends JPanel implements ActionListener {
         
             // Punkte umwandeln in String
             String sPoint = String.valueOf(points);
+            //String sDelay = String.valueOf(DELAY);
             
+            // Objekte in Feld Zeichnen
             g.drawImage(apple.getImage(), apple.getX(), apple.getY(), this);
             g.drawImage(pill.getImage(), pill.getX(), pill.getY(), this);
             g.drawImage(fungus.getImage(), fungus.getX(), fungus.getY(), this);
@@ -140,7 +143,9 @@ abstract class Game extends JPanel implements ActionListener {
             
             // Punktestand rechts oben
             g.drawString(sPoint, 265, 15);
-
+            //g.drawString(sDelay, 240, 15);
+            
+            // Schlange Zeichnen
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
                     g.drawImage(images.getHead(), x[z], y[z], this);
