@@ -21,9 +21,6 @@ abstract class Map extends Game {
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));        
         
     }
-    
-
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -31,6 +28,7 @@ abstract class Map extends Game {
 
         doDrawing(g);
     }
+        
     
     private void doDrawing(Graphics g) {
         
@@ -40,33 +38,15 @@ abstract class Map extends Game {
                 gameStart(g);                
             }
             
-            if(gamePause){
+            else if(gamePause){
                 timer.stop();
-                gamePause(g);
-                
+                gamePause(g);                
             }
             
-            // Punkte umwandeln in String
-            String wert = String.valueOf(points);
-            
-            g.drawImage(apple.getImage(), apple.getX(), apple.getY(), this);
-            g.drawImage(pill.getImage(), pill.getX(), pill.getY(), this);
-            g.drawImage(fungus.getImage(), fungus.getX(), fungus.getY(), this);
-            g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
-            
-            // Punktestand rechts oben
-            g.drawString(wert, 265, 15);
-
-            for (int z = 0; z < dots; z++) {
-                if (z == 0) {
-                    g.drawImage(images.getHead(), x[z], y[z], this);
-                } else {
-                    g.drawImage(images.getBody(), x[z], y[z], this);
-                }
+            else if (gameStart == false && inGame == true){
+                DrawObjects(g);
             }
-
-            Toolkit.getDefaultToolkit().sync();
-
+            
         } else {
 
             gameOver(g);
