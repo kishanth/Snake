@@ -12,6 +12,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -39,8 +41,6 @@ abstract class Game extends JPanel implements ActionListener {
     protected Timer timer;
     protected int DELAY = 80;
 
-    //Spielername und Punkte
-
 
     // Richtungs Variablen
     protected boolean leftDirection = false;
@@ -53,15 +53,9 @@ abstract class Game extends JPanel implements ActionListener {
     
     
     Player onePlayer = new Player();
-    loadImages images = new loadImages();
+    loadImages images = new loadImages();    
+    PICollection coll = new PICollection();    
 
-    // PowerItems erzeugen -- erste Zahl = Punkte, zweite Iconname (wie bild im Explorer), drittens anzahl abzug/zunahme von dots
-    // viertens Delay zunahme oder abnahme (+ = langsamer, - = schneller)
-    PowerItems banana = new PowerItems(50, "banana", 0, 0);
-    PowerItems apple = new PowerItems(10, "apple", 1, -1);
-    PowerItems fungus = new PowerItems(-10, "fungus", -2, 0);
-    PowerItems pill = new PowerItems(5, "pill", 2, 2);
-    
     
     protected void gameStart(Graphics g){
         
@@ -130,19 +124,18 @@ abstract class Game extends JPanel implements ActionListener {
     }
     
     protected void DrawObjects(Graphics g) {
-        
+                        
             // Punkte umwandeln in String
-            String sPoint = String.valueOf(onePlayer.getPoints());
+            String sPoints = String.valueOf(onePlayer.getPoints());
             //String sDelay = String.valueOf(DELAY);
             
             // Objekte in Feld Zeichnen
-            g.drawImage(apple.getImage(), apple.getX(), apple.getY(), this);
-            g.drawImage(pill.getImage(), pill.getX(), pill.getY(), this);
-            g.drawImage(fungus.getImage(), fungus.getX(), fungus.getY(), this);
-            g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
-            
+            for (PowerItems item : coll.items) {
+                g.drawImage(item.getImage(), item.getX(), item.getY(), this);
+            }
+  
             // Punktestand rechts oben
-            g.drawString(sPoint, 265, 15);
+            g.drawString(sPoints, 265, 15);
             //g.drawString(sDelay, 240, 15);
             
             // Schlange Zeichnen
