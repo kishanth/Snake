@@ -5,19 +5,19 @@ abstract class Logic extends Map {
 
     
     // PowerItems Platzieren
-    protected void locatePi(PowerItems pi){
-        int r = (int) (Math.random() * RAND_POS);
-        pi.setX((r * DOT_SIZE));
+    protected void locatePi(PowerItems pi){                          
+            int r = (int) (Math.random() * RAND_POS);
+            pi.setX((r * DOT_SIZE));
         
-        r = (int) (Math.random() * RAND_POS);
-        pi.setY((r * DOT_SIZE));
+            r = (int) (Math.random() * RAND_POS);
+            pi.setY((r * DOT_SIZE));                
     }
     
-    // Prüfen ob PowerItems getroffen wurde, Timer erhöhen
+    // Prüfen ob PowerItems getroffen wurde, Timer erhöhen, Punkte erhöhen und Schlange verlängern
     protected void checkPi(PowerItems pi) {
-
+        
         if ((x[0] == pi.getX()) && (y[0] == pi.getY())) {
-            
+
             if(dots + pi.getDots() >= 3){
                 dots = dots + pi.getDots();
             }
@@ -26,10 +26,28 @@ abstract class Logic extends Map {
                 timer.setDelay(DELAY);
             }            
 
-            locatePi(pi);
-            
+            locatePi(pi); 
+                   
             onePlayer.setPoints(pi.getPointUnit()); 
         }
+    }
+    
+        public void movePill(){
+        
+            PowerItems pill = coll.getPill();
+
+            pill.setY(pill.getY() + 4);        
+
+            if(pill.getY() > 600){
+                locatePi(pill);
+            }
+
+            pill.setX(pill.getX() + 2);
+
+
+            if(pill.getX() > 600){
+                locatePi(pill);
+            }
     }
     
     
