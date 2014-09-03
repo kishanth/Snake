@@ -50,21 +50,6 @@ abstract class Map extends Game {
             gameOver(g);
         }        
     }
-    
-    protected void movePill(){
-        pill.setY(pill.getY() + 5);        
-        
-        if(pill.getY() > 1000){
-            pill.setY(pill.getY() - 10);
-        }
-        
-        pill.setX(pill.getX() + 5);
-        
-        
-        if(pill.getX() > 1000){
-            pill.setX(pill.getX() - 10);
-        }
-    }
 
     protected void move() {
 
@@ -88,10 +73,8 @@ abstract class Map extends Game {
         if (downDirection) {
             y[0] += DOT_SIZE;
         }
-        
-        movePill();
-    }
 
+    }
 
     private class TAdapter extends KeyAdapter {
 
