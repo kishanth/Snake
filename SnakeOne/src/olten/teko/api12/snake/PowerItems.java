@@ -15,7 +15,7 @@ import java.awt.Image;
  */
 public class PowerItems {
     
-    private int x;
+    private int x;    
     private int y;
     private int duration;
     private int points = 0;
@@ -23,9 +23,11 @@ public class PowerItems {
     private int dots;
     private int delay;
     private Image image;
+    private String name;
     
     // Konstruktor mit Punkteübergabe von einzelnem Item
-    public PowerItems(int pointUnit, String object, int dots, int delay) {        
+    public PowerItems(String name, int pointUnit, String object, int dots, int delay) {
+        this.name = name;
         this.pointUnit = pointUnit;
         this.delay = delay;
         this.dots = dots;                
@@ -33,7 +35,7 @@ public class PowerItems {
         image = img.getImage();
     }
     		
-    // Setter         
+    // Setter    
     void setX(int x) {
         this.x = x;
     }        
@@ -50,7 +52,11 @@ public class PowerItems {
         this.pointUnit = pointUnit;
     }
 
-     // Getter 
+     // Getter  
+    
+    String getName() {
+        return name;
+    }    
     int getDelay() {
         return delay;
     }    
